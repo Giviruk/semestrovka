@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
     <e p="C:\Users\tresk\.Rider2019.2\system\extResources" t="IncludeRecursive" />
@@ -7,12 +7,45 @@
       <e p="appsettings.Development.json" t="Include" />
       <e p="appsettings.json" t="Include" />
       <e p="bin" t="ExcludeRecursive" />
+      <e p="ClientApp" t="Include">
+        <e p="app.component.ts" t="Include" />
+      </e>
       <e p="Controllers" t="Include">
         <e p="HomeController.cs" t="Include" />
       </e>
       <e p="Models" t="Include">
         <e p="ErrorViewModel.cs" t="Include" />
       </e>
+      <e p="node_modules\@angular\common" t="IncludeRecursive" />
+      <e p="node_modules\@angular\compiler" t="IncludeRecursive" />
+      <e p="node_modules\@angular\core" t="IncludeRecursive" />
+      <e p="node_modules\@angular\forms" t="IncludeRecursive" />
+      <e p="node_modules\@angular\platform-browser" t="IncludeRecursive" />
+      <e p="node_modules\@angular\platform-browser-dynamic" t="IncludeRecursive" />
+      <e p="node_modules\@angular\router" t="IncludeRecursive" />
+      <e p="node_modules\@types" t="IncludeRecursive">
+        <e p="node" t="IncludeRecursive" />
+        <e p="webpack-env" t="IncludeRecursive" />
+      </e>
+      <e p="node_modules\angular2-template-loader" t="IncludeRecursive" />
+      <e p="node_modules\aspnet-prerendering" t="IncludeRecursive" />
+      <e p="node_modules\aspnet-webpack" t="IncludeRecursive" />
+      <e p="node_modules\awesome-typescript-loader" t="IncludeRecursive" />
+      <e p="node_modules\chalk" t="IncludeRecursive" />
+      <e p="node_modules\commander" t="IncludeRecursive" />
+      <e p="node_modules\core-js" t="IncludeRecursive" />
+      <e p="node_modules\es6-promise" t="IncludeRecursive" />
+      <e p="node_modules\html-loader" t="IncludeRecursive" />
+      <e p="node_modules\raw-loader" t="IncludeRecursive" />
+      <e p="node_modules\rxjs" t="IncludeRecursive" />
+      <e p="node_modules\source-map" t="IncludeRecursive" />
+      <e p="node_modules\terser" t="IncludeRecursive" />
+      <e p="node_modules\tslib" t="IncludeRecursive" />
+      <e p="node_modules\webpack" t="IncludeRecursive" />
+      <e p="node_modules\webpack-cli" t="IncludeRecursive" />
+      <e p="node_modules\webpack-dev-middleware" t="IncludeRecursive" />
+      <e p="node_modules\webpack-hot-middleware" t="IncludeRecursive" />
+      <e p="node_modules\zone.js" t="IncludeRecursive" />
       <e p="obj" t="ExcludeRecursive">
         <e p="Debug" t="Include">
           <e p="netcoreapp2.1" t="Include">
@@ -20,12 +53,14 @@
           </e>
         </e>
       </e>
+      <e p="package.json" t="Include" />
       <e p="packages" t="ExcludeRecursive" />
       <e p="Program.cs" t="Include" />
       <e p="Properties" t="Include">
         <e p="launchSettings.json" t="Include" />
       </e>
       <e p="Startup.cs" t="Include" />
+      <e p="tsconfig.json" t="Include" />
       <e p="Views" t="Include">
         <e p="_ViewImports.cshtml" t="Include" />
         <e p="_ViewStart.cshtml" t="Include" />
