@@ -4,7 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Semestrovka.Data
+namespace WebApplication1.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
@@ -13,4 +13,5 @@ namespace Semestrovka.Data
         {
         }
     }
+    
 }

@@ -1,6 +1,6 @@
 using System;
 
-namespace Semestrovka.Models
+namespace WebApplication1.Models
 {
     public class ErrorViewModel
     {
