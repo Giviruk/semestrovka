@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Semestrovka.Data;
+using Semestrovka.Data.Logic;
 using Semestrovka.Models.DBModels;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Web;
 
 namespace Semestrovka.Controllers
 {
@@ -49,13 +49,29 @@ namespace Semestrovka.Controllers
         {
             try
             {
-                _context.Users.Add(user);
-                _context.SaveChanges();
-                return View();
+                string cookie;
+                if (!HttpContext.Request.Cookies.ContainsKey("Token"))
+                {
+                    return BadRequest();
+                }
+                else
+                {
+                    cookie = HttpContext.Request.Cookies["Token"];
+                    if (cookie == _context.Users.Find(user.Id).Token)
+                    {
+
+
+                        user.Token = Hash.MakeHash(user.Login);
+                        _context.Users.Add(user);
+                        _context.SaveChanges();
+                        return View();
+                    }
+                    else return BadRequest();
+                }
             }
-            catch
+            catch (Exception ex)
             {
-                return BadRequest();
+                return BadRequest(ex);
             }
         }
 
@@ -74,7 +90,31 @@ namespace Semestrovka.Controllers
             }
             _context.Users.Update(user);
             _context.SaveChanges();
+            var a = HttpContext.Request.Cookies["Token"];
             return View(users);
+        }
+
+        public async Task<IActionResult> Auth(string log, string pass)
+        {
+            try
+            {
+                var user = _context.Users.FirstOrDefault(user => user.Login == log);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+                if (user.Pass != pass)
+                {
+                    return BadRequest();
+                }
+                HttpContext.Response.Cookies.Append("Token", user.Token);
+
+                return View();
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         // GET: Users/Delete/5
