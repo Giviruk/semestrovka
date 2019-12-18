@@ -1,35 +1,32 @@
-﻿using System;
-using System.Globalization;
-using System.Linq;
-using System.Security.Policy;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using WebApplication1.Data;
-using WebApplication1.Models;
+using Semestrovka.Data;
+using Semestrovka.Models.DBModels;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace WebApplication1.Controllers
+namespace Semestrovka.Controllers
 {
     public class DataBaseController : Controller
     {
         // GET
-        public static ItemContext Db;
+        private static d6h4jeg5tcb9d8Context _context;
         
         //если строка null, значит в форме name не указан
         public IActionResult SearchResults(string searchString)
         {
-            var result = Db.Items.Where(item => item.Name.ToLower().Contains(searchString.ToLower()));
+            var result = _context.Product.Where(item => item.Name.ToLower().Contains(searchString.ToLower()));
 
             return View(result.ToList());
         }
         
-        public DataBaseController(ItemContext db)
+        public DataBaseController(d6h4jeg5tcb9d8Context context)
         {
-            Db = db;
+            _context = context;
         }
         public async Task<IActionResult> AdminPanel()
         {
-            return View(await Db.Items.ToListAsync());//получаем объекты из бд
+            return View(await _context.Product.ToListAsync());//получаем объекты из бд
         }
         public IActionResult Create()
         {
@@ -37,10 +34,10 @@ namespace WebApplication1.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Phone phone)
+        public async Task<IActionResult> Create(Product product)
         {
-            Db.Items.Add(phone); //sql выражение insert
-            await Db.SaveChangesAsync(); //выполняет выражение
+            _context.Product.Add(product); //sql выражение insert
+            await _context.SaveChangesAsync(); //выполняет выражение
             return RedirectToAction("AdminPanel");
         }
 
@@ -48,9 +45,9 @@ namespace WebApplication1.Controllers
         {
             if (id != null)
             {
-                Phone phone = await Db.Items.FirstOrDefaultAsync(p => p.Id == id);
-                if (phone != null)
-                    return View(phone);
+                Product product = await _context.Product.FirstOrDefaultAsync(p => p.Id == id);
+                if (product != null)
+                    return View(product);
             }
             return NotFound();
         }
@@ -59,18 +56,18 @@ namespace WebApplication1.Controllers
         {
             if(id!=null)
             {
-                Phone phone = await Db.Items.FirstOrDefaultAsync(p=>p.Id==id);
-                if (phone != null)
-                    return View(phone);
+                Product product = await _context.Product.FirstOrDefaultAsync(p=>p.Id==id);
+                if (product != null)
+                    return View(product);
             }
             return NotFound();
         }
         //Получает отредактированные данные в виде объекта 
         [HttpPost]
-        public async Task<IActionResult> Edit(Phone phone)
+        public async Task<IActionResult> Edit(Product product)
         {
-            Db.Items.Update(phone);//sql выражение insert
-            await Db.SaveChangesAsync();//выполняет выражение
+            _context.Product.Update(product);//sql выражение insert
+            await _context.SaveChangesAsync();//выполняет выражение
             return RedirectToAction("AdminPanel");
         }
         
@@ -79,10 +76,10 @@ namespace WebApplication1.Controllers
         {
             if (id != null)
             {
-                Phone phone = new Phone
+                Product product = new Product
                     { Id = id.Value };
-                Db.Entry(phone).State = EntityState.Deleted;
-                await Db.SaveChangesAsync();
+                _context.Entry(product).State = EntityState.Deleted;
+                await _context.SaveChangesAsync();
                 return RedirectToAction("AdminPanel");
             }
             return NotFound();

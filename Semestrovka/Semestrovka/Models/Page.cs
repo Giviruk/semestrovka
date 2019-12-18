@@ -1,10 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Razor.TagHelpers;
-using WebApplication1.Controllers;
 //Хранит информацию о количестве страниц и их контроллерах
-namespace WebApplication1.Models
+namespace Semestrovka.Models
 {
     public class Page
     {
