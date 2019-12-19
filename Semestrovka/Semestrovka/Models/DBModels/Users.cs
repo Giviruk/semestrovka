@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Semestrovka.Models.DBModels
 {
-    public partial class Users
+    public class Users
     {
         public Users()
         {

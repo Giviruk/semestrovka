@@ -3,6 +3,10 @@
     ViewBag.Title = "Results";
 }
 
+@{
+    var items = new SelectList(Model);
+    @Html.DropDownList("Price", items, "Price")
+}
 
 <table class="table">
     @foreach (var item in Model)
@@ -10,7 +14,7 @@
         <div class="col-md-3 col-sm-6">
             <div class="single-shop-product">
                 <div class="product-upper">
-                    <img src="@item.MainpictureurlNavigation.Imagepath.Replace("~", "")" alt="">
+                    @*<img src="@item.MainpictureurlNavigation.Imagepath" alt=""> не работает*@
                 </div>
                 <h2>
                     <a href="">@item.Name</a>

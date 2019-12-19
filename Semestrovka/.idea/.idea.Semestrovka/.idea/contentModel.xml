@@ -101,6 +101,7 @@
             <e p="Details.cshtml" t="Include" />
             <e p="Edit.cshtml" t="Include" />
             <e p="Index.cshtml" t="Include" />
+            <e p="Login.cshtml" t="Include" />
           </e>
         </e>
         <e p="wwwroot" t="Include">
@@ -209,6 +210,7 @@
               <e p="LICENSE.txt" t="Include" />
             </e>
           </e>
+          <e p="modal.js" t="Include" />
           <e p="site.css" t="Include" />
           <e p="style.css" t="Include" />
         </e>

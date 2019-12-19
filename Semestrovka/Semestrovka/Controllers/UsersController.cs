@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Semestrovka.Data;
 using Semestrovka.Models.DBModels;
@@ -19,6 +16,11 @@ namespace Semestrovka.Controllers
             _context = context;
         }
 
+        public IActionResult Login()
+        {
+            return PartialView();
+        }
+
         // GET: Users
         public async Task<IActionResult> Index()
         {
@@ -29,17 +31,11 @@ namespace Semestrovka.Controllers
         // GET: Users/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var users = await _context.Users
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (users == null)
-            {
-                return NotFound();
-            }
+            if (users == null) return NotFound();
 
             return View(users);
         }
@@ -62,16 +58,10 @@ namespace Semestrovka.Controllers
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(Users user)
         {
-            if (user == null)
-            {
-                return NotFound();
-            }
+            if (user == null) return NotFound();
 
             var users = await _context.Users.FindAsync(user.Id);
-            if (users == null)
-            {
-                return NotFound();
-            }
+            if (users == null) return NotFound();
             _context.Users.Update(user);
             _context.SaveChanges();
             return View(users);
@@ -80,16 +70,10 @@ namespace Semestrovka.Controllers
         // GET: Users/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var users = await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
-            if (users == null)
-            {
-                return NotFound();
-            }
+            if (users == null) return NotFound();
 
             _context.Remove(users);
             _context.SaveChanges();
