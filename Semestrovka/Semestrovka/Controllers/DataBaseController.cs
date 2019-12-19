@@ -24,9 +24,11 @@ namespace Semestrovka.Controllers
         {
             _context = context;
         }
-        public async Task<IActionResult> AdminPanel()
+        public IActionResult AdminPanel()
         {
-            return View(await _context.Product.ToListAsync());//получаем объекты из бд
+            var products = _context.Product.ToList();
+            var  mages = _context.Images.ToList();
+            return View(products);//получаем объекты из бд
         }
         public IActionResult Create()
         {

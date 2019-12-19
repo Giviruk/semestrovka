@@ -22,10 +22,18 @@ namespace Semestrovka
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite(
+                options.UseNpgsql(
                     Configuration.GetConnectionString("DefaultConnection")));
+            
+//            services.AddDbContext<d6h4jeg5tcb9d8Context>(options =>
+//                options.UseSqlite(
+//                    Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddDbContext<d6h4jeg5tcb9d8Context>();
+            
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            
             services.AddControllersWithViews();
             services.AddRazorPages();
         }

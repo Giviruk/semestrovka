@@ -23,7 +23,9 @@ namespace Semestrovka.Controllers
         }
         public IActionResult Shop()
         {
+
             var allItems = _context.Product.ToList();
+           var  mages = _context.Images.ToList();
             return View(allItems);
         }
         public IActionResult SingleProduct()
