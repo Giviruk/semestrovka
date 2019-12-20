@@ -28,6 +28,9 @@
         <e p="Data" t="Include">
           <e p="ApplicationDbContext.cs" t="Include" />
           <e p="d6h4jeg5tcb9d8Context.cs" t="Include" />
+          <e p="Logic" t="Include">
+            <e p="Hash.cs" t="Include" />
+          </e>
           <e p="Migrations" t="Include">
             <e p="ApplicationDbContextModelSnapshot.cs" t="Include" />
           </e>

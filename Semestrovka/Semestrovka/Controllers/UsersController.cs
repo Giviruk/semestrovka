@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -7,10 +6,6 @@ using Microsoft.EntityFrameworkCore;
 using Semestrovka.Data;
 using Semestrovka.Data.Logic;
 using Semestrovka.Models.DBModels;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
 
 namespace Semestrovka.Controllers
 {
@@ -52,25 +47,19 @@ namespace Semestrovka.Controllers
         {
             try
             {
-                string cookie;
-                if (!HttpContext.Request.Cookies.ContainsKey("Token"))
-                {
-                    return BadRequest();
-                }
-                else
-                {
-                    cookie = HttpContext.Request.Cookies["Token"];
-                    if (cookie == _context.Users.Find(user.Id).Token)
-                    {
+                if (!HttpContext.Request.Cookies.ContainsKey("Token")) return BadRequest();
 
+                var cookie = HttpContext.Request.Cookies["Token"];
 
-                        user.Token = Hash.MakeHash(user.Login);
-                        _context.Users.Add(user);
-                        _context.SaveChanges();
-                        return View();
-                    }
-                    else return BadRequest();
+                if (cookie == _context.Users.Find(user.Id).Token)
+                {
+                    user.Token = Hash.MakeHash(user.Login);
+                    _context.Users.Add(user);
+                    _context.SaveChanges();
+                    return View();
                 }
+
+                return BadRequest();
             }
             catch (Exception ex)
             {
@@ -91,24 +80,27 @@ namespace Semestrovka.Controllers
             return View(users);
         }
 
+        public IActionResult Auth()
+        {
+            return View();
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Auth(string log, string pass)
         {
             try
             {
                 var user = _context.Users.FirstOrDefault(user => user.Login == log);
-                if (user == null)
-                {
-                    return NotFound();
-                }
-                if (user.Pass != pass)
-                {
-                    return BadRequest();
-                }
+
+                if (user == null) return NotFound();
+
+                if (user.Pass != pass) return BadRequest();
+
                 HttpContext.Response.Cookies.Append("Token", user.Token);
 
-                return View();
+                return RedirectToPage("Index");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex);
             }
