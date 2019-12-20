@@ -41,8 +41,13 @@ namespace Semestrovka.Controllers
 
             return View(users);
         }
-
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return RedirectToPage("Register") ;
+        }
         // GET: Users/Create
+        [HttpPost]
         public IActionResult Create(Users user)
         {
             try
@@ -66,8 +71,8 @@ namespace Semestrovka.Controllers
                 return BadRequest(ex);
             }
         }
-
         // GET: Users/Edit/5
+        [HttpPost]
         public async Task<IActionResult> Edit(Users user)
         {
             if (user == null) return NotFound();
@@ -79,7 +84,7 @@ namespace Semestrovka.Controllers
             var a = HttpContext.Request.Cookies["Token"];
             return View(users);
         }
-
+        [HttpGet]
         public IActionResult Auth()
         {
             return View();
