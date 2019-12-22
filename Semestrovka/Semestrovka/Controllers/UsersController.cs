@@ -26,7 +26,7 @@ namespace Semestrovka.Controllers
         // GET: Users
         public async Task<IActionResult> Index()
         {
-            var users = await _context.Users.ToListAsync();
+            var users = await _context.Users.ToListAsync(); //null exp
             return View(users);
         }
 
