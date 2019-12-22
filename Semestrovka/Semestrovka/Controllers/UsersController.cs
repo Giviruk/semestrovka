@@ -20,7 +20,7 @@ namespace Semestrovka.Controllers
 
         public IActionResult Login()
         {
-            return PartialView();
+            return View();
         }
 
         // GET: Users
@@ -42,6 +42,12 @@ namespace Semestrovka.Controllers
             return View(users);
         }
 
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
         // GET: Users/Create
         public IActionResult Create(Users user)
         {
@@ -56,7 +62,7 @@ namespace Semestrovka.Controllers
                     user.Token = Hash.MakeHash(user.Login);
                     _context.Users.Add(user);
                     _context.SaveChanges();
-                    return View();
+                    return RedirectToAction("Index", "Home");
                 }
 
                 return BadRequest();

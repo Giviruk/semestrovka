@@ -111,6 +111,7 @@
           <e p="css" t="Include">
             <e p="bootstrap.min.css" t="Include" />
             <e p="font-awesome.min.css" t="Include" />
+            <e p="Login_Page.css" t="Include" />
             <e p="owl.carousel.css" t="Include" />
             <e p="responsive.css" t="Include" />
           </e>
