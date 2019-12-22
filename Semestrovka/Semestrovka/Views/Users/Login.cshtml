@@ -1,0 +1,54 @@
+﻿@model Semestrovka.Models.DBModels.Users
+@{
+    ViewBag.Title = "LogIn";
+}
+
+@using (Html.BeginForm("Create", "Users", FormMethod.Post))
+{
+    <center>
+        <div class="form-group input-group">
+            @Html.LabelFor(users => users.Firstname, "Firstname", new
+            {
+                style = "font-size: 2em"
+            })
+            @Html.TextBoxFor(users => users.Firstname, new
+            {
+                @class = "form-control"
+            })
+        </div>
+        <div class="form-group input-group">
+            @Html.LabelFor(users => users.Lastname, "Lastname", new
+            {
+                style = "font-size: 2em"
+            })
+            @Html.TextBoxFor(users => users.Lastname, new
+            {
+                @class = "form-control"
+            })
+        </div>
+
+        <div class="form-group input-group">
+            @Html.LabelFor(users => users.Login, "Login *", new
+            {
+                style = "font-size: 2em"
+            })
+            @Html.TextBoxFor(users => users.Login, new
+            {
+                @class = "form-control"
+            })
+        </div>
+        <div class="form-group input-group">
+            @Html.LabelFor(users => users.Pass, "Password *", new
+            {
+                style = "font-size: 2em"
+            })
+            @Html.TextBoxFor(users => users.Pass, new
+            {
+                @class = "form-control"
+            })
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Send" class="btn btn-default"/>
+        </div>
+    </center>
+}

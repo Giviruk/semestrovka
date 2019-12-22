@@ -1,35 +1,22 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Semestrovka.Data;
 using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design.Internal;
-using Npgsql;
-using WebApplication1.Data;
-using WebApplication1.Models;
 
-namespace WebApplication1.Controllers
+namespace Semestrovka.Controllers
 {
     public class OtherController : Controller
     {
-        public static ItemContext Db;
-        
-        public OtherController(ItemContext db)
+        private static d6h4jeg5tcb9d8Context _context;
+
+        public OtherController(d6h4jeg5tcb9d8Context context)
         {
-            Db = db;
-            
-        }
-        public IActionResult Cart()
-        {
-            return View();
-        }
-        public IActionResult Checkout()
-        {
-            return View();
+            _context = context;
+
         }
         public IActionResult Shop()
         {
-            var allItems = Db.Items.ToList();
+            var allItems = _context.Product.ToList();
+            var images = _context.Images.ToArray();
             return View(allItems);
         }
         public IActionResult SingleProduct()
