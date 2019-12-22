@@ -44,7 +44,7 @@ namespace Semestrovka.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            return RedirectToPage("Register") ;
+            return View() ;
         }
         // GET: Users/Create
         [HttpPost]
