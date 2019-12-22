@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -20,51 +21,59 @@ namespace Semestrovka.Controllers
 
         public IActionResult Login()
         {
-            return PartialView();
+            return View();
         }
 
         // GET: Users
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            var users = await _context.Users.ToListAsync();
-            return View(users);
+            try
+            {
+                var users = _context.Users.ToList(); //null exp
+                return View(users);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         // GET: Users/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public IActionResult Details(int? id)
         {
             if (id == null) return NotFound();
 
-            var users = await _context.Users
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var users = _context.Users.Find(id);
             if (users == null) return NotFound();
 
             return View(users);
         }
+
+        public IActionResult MyProfile()
+        {
+            var user = _context.Users.FirstOrDefault(x => x.Token == HttpContext.Request.Cookies["Token"]);
+            return View(user);
+        }
+
         [HttpGet]
         public IActionResult Create()
         {
+
+            var cities = _context.Cities.ToList();
+            ViewBag.Cities = cities.Select(x => x.Name);
             return View() ;
         }
+
         // GET: Users/Create
         [HttpPost]
         public IActionResult Create(Users user)
         {
             try
             {
-                if (!HttpContext.Request.Cookies.ContainsKey("Token")) return BadRequest();
-
-                var cookie = HttpContext.Request.Cookies["Token"];
-
-                if (cookie == _context.Users.Find(user.Id).Token)
-                {
-                    user.Token = Hash.MakeHash(user.Login);
-                    _context.Users.Add(user);
-                    _context.SaveChanges();
-                    return View();
-                }
-
-                return BadRequest();
+                user.Token = Hash.MakeHash(user.Login);
+                _context.Users.Add(user);
+                _context.SaveChanges();
+                return RedirectToAction("Index", "Home");
             }
             catch (Exception ex)
             {
@@ -72,9 +81,9 @@ namespace Semestrovka.Controllers
             }
         }
         // GET: Users/Edit/5
-        [HttpPost]
-        public async Task<IActionResult> Edit(Users user)
+        public async Task<IActionResult> Edit(int id)
         {
+            var user = _context.Users.Find(id);
             if (user == null) return NotFound();
 
             var users = await _context.Users.FindAsync(user.Id);
@@ -84,6 +93,7 @@ namespace Semestrovka.Controllers
             var a = HttpContext.Request.Cookies["Token"];
             return View(users);
         }
+
         [HttpGet]
         public IActionResult Auth()
         {
@@ -99,7 +109,7 @@ namespace Semestrovka.Controllers
 
                 if (user == null) return NotFound();
 
-                if (user.Pass != pass) return BadRequest();
+                if (user.Pass != Hash.MakeHash(pass)) return BadRequest();
 
                 HttpContext.Response.Cookies.Append("Token", user.Token);
 
@@ -112,17 +122,16 @@ namespace Semestrovka.Controllers
         }
 
         // GET: Users/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        [HttpGet("users/delete/{id}")]
+        public IActionResult Delete(int? id)
         {
             if (id == null) return NotFound();
-
-            var users = await _context.Users.FirstOrDefaultAsync(m => m.Id == id);
-            if (users == null) return NotFound();
-
-            _context.Remove(users);
+            var user = _context.Users.Find(id);
+            if (user == null) return NotFound();
+            _context.Users.Remove(user);
             _context.SaveChanges();
 
-            return View(users);
+            return View();
         }
 
         private bool UsersExists(int id)

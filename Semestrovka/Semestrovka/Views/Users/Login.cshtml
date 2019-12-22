@@ -1,30 +1,54 @@
-﻿@using Microsoft.AspNetCore.Identity
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+﻿@model Semestrovka.Models.DBModels.Users
+@{
+    ViewBag.Title = "LogIn";
+}
 
+@using (Html.BeginForm("Create", "Users", FormMethod.Post))
+{
+    <center>
+        <div class="form-group input-group">
+            @Html.LabelFor(users => users.Firstname, "Firstname", new
+            {
+                style = "font-size: 2em"
+            })
+            @Html.TextBoxFor(users => users.Firstname, new
+            {
+                @class = "form-control"
+            })
+        </div>
+        <div class="form-group input-group">
+            @Html.LabelFor(users => users.Lastname, "Lastname", new
+            {
+                style = "font-size: 2em"
+            })
+            @Html.TextBoxFor(users => users.Lastname, new
+            {
+                @class = "form-control"
+            })
+        </div>
 
-<ul class="fa fa-user">
-    @if (SignInManager.IsSignedIn(User))
-    {
-        <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a>
-        </li>
-        <li class="nav-item">
-            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new
-                                                                                                          {
-                                                                                                              area = ""
-                                                                                                          })">
-                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-            </form>
-        </li>
-    }
-    else
-    {
-        <li class="fa fa-user">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-        </li>
-        <li class="fa fa-user">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-        </li>
-    }
-</ul>
+        <div class="form-group input-group">
+            @Html.LabelFor(users => users.Login, "Login *", new
+            {
+                style = "font-size: 2em"
+            })
+            @Html.TextBoxFor(users => users.Login, new
+            {
+                @class = "form-control"
+            })
+        </div>
+        <div class="form-group input-group">
+            @Html.LabelFor(users => users.Pass, "Password *", new
+            {
+                style = "font-size: 2em"
+            })
+            @Html.TextBoxFor(users => users.Pass, new
+            {
+                @class = "form-control"
+            })
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Send" class="btn btn-default"/>
+        </div>
+    </center>
+}
