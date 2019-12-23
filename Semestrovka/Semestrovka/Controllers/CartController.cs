@@ -26,6 +26,11 @@ namespace Semestrovka.Controllers
             return View(await d6h4jeg5tcb9d8Context.ToListAsync());
         }
 
+        public IActionResult Checkout()
+        {
+            return View();
+        }
+
         // GET: Cart/Details/5
         public async Task<IActionResult> Details(int? id)
         {

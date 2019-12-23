@@ -21,8 +21,8 @@ namespace Semestrovka.Models
             new Page("Index", "Home"),
             new Page("Shop"),
             new Page("Single Product"),
-            new Page("Cart"),
-            new Page("Checkout"),
+            new Page("Index","Cart"),
+            new Page("Checkout","Cart"),
             new Page("Category"),
             new Page("Others"),
             new Page("Contact")
