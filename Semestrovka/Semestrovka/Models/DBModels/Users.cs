@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Semestrovka.Models.DBModels
 {
@@ -11,18 +12,18 @@ namespace Semestrovka.Models.DBModels
             Ordersofusers = new HashSet<Ordersofusers>();
         }
 
-        public int Id { get; set; }
+        [HiddenInput(DisplayValue = false)] public int Id { get; set; }
 
         [StringLength(255)] public string Firstname { get; set; }
 
         [StringLength(255)] public string Middlename { get; set; }
 
         [StringLength(255)] public string Lastname { get; set; }
-
-        public int? City { get; set; }
+        [HiddenInput(DisplayValue = false)] public int? City { get; set; }
 
         [Required(ErrorMessage = "This field is required")]
         [StringLength(255, MinimumLength = 4, ErrorMessage = "Incorrect login")]
+        [HiddenInput(DisplayValue = false)]
         public string Login { get; set; }
 
         [Required(ErrorMessage = "This field is required")]
@@ -31,7 +32,7 @@ namespace Semestrovka.Models.DBModels
         public string Pass { get; set; }
 
         [StringLength(255, MinimumLength = 4)] public string Address { get; set; }
-        public string Token { get; set; }
+        [HiddenInput(DisplayValue = false)] public string Token { get; set; }
 
         public virtual Cities CityNavigation { get; set; }
         public virtual ICollection<Orders> Orders { get; set; }

@@ -91,7 +91,7 @@
                     })
                 </div>
                 <div class="Field Field--full">
-                    @Html.TextBox("pass", "", new
+                    @Html.PasswordFor(users => users.Pass, new
                     {
                         @class = "Field-text",
                         placeholder = "Password",

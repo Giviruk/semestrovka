@@ -63,16 +63,10 @@
                 <div class="user-menu">
                     <ul>
                         <li>
-                            @Html.ActionLink("My Account", "MyProfile", "Users", new
-                            {
-                                @class = "fa fa-user"
-                            })
-                        </li>
-                        <li>
                             <a href="#"><i class="fa fa-heart"></i> Wishlist</a>
                         </li>
                         <li>
-                            @Html.ActionLink("Cart", "Index", "Cart", "", new
+                            @Html.ActionLink("Cart", "Cart", "Cart", "", new
                             {
                                 @class = "nav-link text-dark fa fa-user"
                             })
@@ -82,10 +76,20 @@
                             <a asp-area="" asp-controller="Cart" asp-action="Checkout"><i class="fa fa-user"></i> Checkout</a>
                         </li>
                         <li>
-                            @Html.ActionLink("Login", "Login", "Users", "", new
+                            @if (ViewBag.Auth != true)
                             {
-                                @class = "fa fa-user"
-                            })
+                                @Html.ActionLink("Login", "Login", "Users", "", new
+                                {
+                                    @class = "fa fa-user"
+                                })
+                            }
+                            else
+                            {
+                                @Html.ActionLink("My Account", "MyProfile", "Users", new
+                                {
+                                    @class = "fa fa-user"
+                                })
+                            }
                         </li>
                     </ul>
                 </div>
@@ -108,7 +112,7 @@
 
             <div class="col-sm-6">
                 <div class="shopping-item">
-                    <a asp-area="" asp-controller="Cart" asp-action="Index">
+                    <a asp-area="" asp-controller="Cart" asp-action="Cart">
                         Cart - <span class="cart-amunt">$100</span>
                         <i class="fa fa-shopping-cart"></i>
                         <span class="product-count">5</span>
@@ -135,9 +139,6 @@
                     {
                         <li class="@(ViewBag.Title == page.Name ? "active" : null)">
                             @Html.ActionLink(page.Name, page.Name.Replace(" ", ""), page.Controller)
-                            @* <a asp-area="" asp-controller=@(page.Controller) asp-action=@(page.Name.Replace(" ", ""))> *@
-                            @*         @(page.Name=="Index"?"Home":page.Name) *@
-                            @* </a> *@
                         </li>
                     }
                 </ul>

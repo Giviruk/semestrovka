@@ -82,23 +82,20 @@ namespace Semestrovka.Controllers
         }
 
         // GET: Users/Edit/5
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(Users user)
         {
-            var user = _context.Users.Find(id);
-            if (user == null) return NotFound();
-
-            var users = await _context.Users.FindAsync(user.Id);
-            if (users == null) return NotFound();
-            _context.Users.Update(user);
-            _context.SaveChanges();
-            var a = HttpContext.Request.Cookies["Token"];
-            return View(users);
-        }
-
-        [HttpGet]
-        public IActionResult Auth()
-        {
-            return View();
+            try
+            {
+                if (user == null) return NotFound();
+                _context.Users.Update(user);
+                _context.SaveChanges();
+                var a = HttpContext.Request.Cookies["Token"];
+                return RedirectToAction("MyProfile");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex);
+            }
         }
 
         [HttpPost]
