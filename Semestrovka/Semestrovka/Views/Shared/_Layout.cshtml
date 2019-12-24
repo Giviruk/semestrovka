@@ -76,7 +76,7 @@
                             <a asp-area="" asp-controller="Cart" asp-action="Checkout"><i class="fa fa-user"></i> Checkout</a>
                         </li>
                         <li>
-                            @if (ViewBag.Auth != true)
+                            @if (ViewBag.Auth as bool? != true)
                             {
                                 @Html.ActionLink("Login", "Login", "Users", "", new
                                 {
