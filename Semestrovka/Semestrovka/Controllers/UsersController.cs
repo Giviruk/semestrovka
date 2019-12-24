@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -87,6 +88,7 @@ namespace Semestrovka.Controllers
             try
             {
                 if (user == null) return NotFound();
+                if (user.City == null) return BadRequest("City was null");
                 _context.Users.Update(user);
                 _context.SaveChanges();
                 var a = HttpContext.Request.Cookies["Token"];
@@ -96,6 +98,12 @@ namespace Semestrovka.Controllers
             {
                 return BadRequest(ex);
             }
+        }
+
+        public IActionResult LogOut()
+        {
+            ViewBag.Auth = false;
+            return RedirectToAction("Login");
         }
 
         [HttpPost]
