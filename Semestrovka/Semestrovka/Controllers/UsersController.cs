@@ -67,6 +67,9 @@ namespace Semestrovka.Controllers
         {
             try
             {
+                if (user == null) return BadRequest("user is null");
+                user.City = 35;
+                user.Address = "";
                 user.Token = Hash.MakeHash(user.Login);
                 _context.Users.Add(user);
                 _context.SaveChanges();
@@ -99,19 +102,19 @@ namespace Semestrovka.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Auth(string log, string pass)
+        public IActionResult Auth(string log, string pass)
         {
             try
             {
                 var user = _context.Users.FirstOrDefault(user => user.Login == log);
 
-                if (user == null) return NotFound();
+                if (user == null) return NotFound("User not found");
 
-                if (user.Pass != Hash.MakeHash(pass)) return BadRequest();
+                if (user.Pass != pass) return BadRequest("Incorrect pass");
 
                 HttpContext.Response.Cookies.Append("Token", user.Token);
-
-                return RedirectToPage("Index");
+                ViewBag.Auth = true;
+                return RedirectToAction("MyProfile");
             }
             catch (Exception ex)
             {

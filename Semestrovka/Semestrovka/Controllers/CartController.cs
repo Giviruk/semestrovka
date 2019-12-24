@@ -18,7 +18,7 @@ namespace Semestrovka.Controllers
         }
 
         // GET: Cart
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Cart()
         {
             var d6H4Jeg5Tcb9d8Context = _context.Orders.Include(o => o.DeliveryNavigation)
                 .Include(o => o.OwnerNavigation).Include(o => o.StatusNavigation);
@@ -68,7 +68,7 @@ namespace Semestrovka.Controllers
             {
                 _context.Add(orders);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Cart));
             }
 
             ViewData["Delivery"] = new SelectList(_context.Deliveries, "Id", "Id", orders.Delivery);
@@ -116,7 +116,7 @@ namespace Semestrovka.Controllers
                     throw;
                 }
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Cart));
             }
 
             ViewData["Delivery"] = new SelectList(_context.Deliveries, "Id", "Id", orders.Delivery);
@@ -150,7 +150,7 @@ namespace Semestrovka.Controllers
             var orders = await _context.Orders.FindAsync(id);
             _context.Orders.Remove(orders);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Cart));
         }
 
         private bool OrdersExists(int id)
