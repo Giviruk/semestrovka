@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -22,8 +20,9 @@ namespace Semestrovka.Controllers
         // GET: Cart
         public async Task<IActionResult> Index()
         {
-            var d6h4jeg5tcb9d8Context = _context.Orders.Include(o => o.DeliveryNavigation).Include(o => o.OwnerNavigation).Include(o => o.StatusNavigation);
-            return View(await d6h4jeg5tcb9d8Context.ToListAsync());
+            var d6H4Jeg5Tcb9d8Context = _context.Orders.Include(o => o.DeliveryNavigation)
+                .Include(o => o.OwnerNavigation).Include(o => o.StatusNavigation);
+            return View(await d6H4Jeg5Tcb9d8Context.ToListAsync());
         }
 
         public IActionResult Checkout()
@@ -34,20 +33,15 @@ namespace Semestrovka.Controllers
         // GET: Cart/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var orders = await _context.Orders
                 .Include(o => o.DeliveryNavigation)
                 .Include(o => o.OwnerNavigation)
                 .Include(o => o.StatusNavigation)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (orders == null)
-            {
-                return NotFound();
-            }
+
+            if (orders == null) return NotFound();
 
             return View(orders);
         }
@@ -66,7 +60,9 @@ namespace Semestrovka.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Owner,Status,Datecreated,Delivery,Address,PayType,PhoneNumber,Email")] Orders orders)
+        public async Task<IActionResult> Create(
+            [Bind("Id,Owner,Status,Datecreated,Delivery,Address,PayType,PhoneNumber,Email")]
+            Orders orders)
         {
             if (ModelState.IsValid)
             {
@@ -74,6 +70,7 @@ namespace Semestrovka.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["Delivery"] = new SelectList(_context.Deliveries, "Id", "Id", orders.Delivery);
             ViewData["Owner"] = new SelectList(_context.Users, "Id", "Id", orders.Owner);
             ViewData["Status"] = new SelectList(_context.Statuses, "Id", "Id", orders.Status);
@@ -83,16 +80,12 @@ namespace Semestrovka.Controllers
         // GET: Cart/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var orders = await _context.Orders.FindAsync(id);
-            if (orders == null)
-            {
-                return NotFound();
-            }
+
+            if (orders == null) return NotFound();
+
             ViewData["Delivery"] = new SelectList(_context.Deliveries, "Id", "Id", orders.Delivery);
             ViewData["Owner"] = new SelectList(_context.Users, "Id", "Id", orders.Owner);
             ViewData["Status"] = new SelectList(_context.Statuses, "Id", "Id", orders.Status);
@@ -104,12 +97,11 @@ namespace Semestrovka.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Owner,Status,Datecreated,Delivery,Address,PayType,PhoneNumber,Email")] Orders orders)
+        public async Task<IActionResult> Edit(int id,
+            [Bind("Id,Owner,Status,Datecreated,Delivery,Address,PayType,PhoneNumber,Email")]
+            Orders orders)
         {
-            if (id != orders.Id)
-            {
-                return NotFound();
-            }
+            if (id != orders.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
@@ -120,17 +112,13 @@ namespace Semestrovka.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!OrdersExists(orders.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    if (!OrdersExists(orders.Id)) return NotFound();
+                    throw;
                 }
+
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["Delivery"] = new SelectList(_context.Deliveries, "Id", "Id", orders.Delivery);
             ViewData["Owner"] = new SelectList(_context.Users, "Id", "Id", orders.Owner);
             ViewData["Status"] = new SelectList(_context.Statuses, "Id", "Id", orders.Status);
@@ -140,26 +128,22 @@ namespace Semestrovka.Controllers
         // GET: Cart/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var orders = await _context.Orders
                 .Include(o => o.DeliveryNavigation)
                 .Include(o => o.OwnerNavigation)
                 .Include(o => o.StatusNavigation)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (orders == null)
-            {
-                return NotFound();
-            }
+
+            if (orders == null) return NotFound();
 
             return View(orders);
         }
 
         // POST: Cart/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

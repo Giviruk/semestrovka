@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Semestrovka.Data;
 using Semestrovka.Data.Logic;
 using Semestrovka.Models.DBModels;
@@ -21,7 +19,7 @@ namespace Semestrovka.Controllers
 
         public IActionResult Login()
         {
-            return View();
+            return PartialView();
         }
 
         // GET: Users
@@ -32,7 +30,7 @@ namespace Semestrovka.Controllers
                 var users = _context.Users.ToList(); //null exp
                 return View(users);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return BadRequest(ex);
             }
@@ -58,10 +56,9 @@ namespace Semestrovka.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-
             var cities = _context.Cities.ToList();
             ViewBag.Cities = cities.Select(x => x.Name);
-            return View() ;
+            return View();
         }
 
         // GET: Users/Create
@@ -80,6 +77,7 @@ namespace Semestrovka.Controllers
                 return BadRequest(ex);
             }
         }
+
         // GET: Users/Edit/5
         public async Task<IActionResult> Edit(int id)
         {

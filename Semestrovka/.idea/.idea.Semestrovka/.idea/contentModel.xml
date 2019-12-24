@@ -20,9 +20,12 @@
         </e>
         <e p="bin" t="ExcludeRecursive" />
         <e p="Controllers" t="Include">
+          <e p="CartController.cs" t="Include" />
+          <e p="CategoriesController.cs" t="Include" />
           <e p="DataBaseController.cs" t="Include" />
           <e p="HomeController.cs" t="Include" />
           <e p="OtherController.cs" t="Include" />
+          <e p="ProductsController.cs" t="Include" />
           <e p="UsersController.cs" t="Include" />
         </e>
         <e p="Data" t="Include">
@@ -70,6 +73,17 @@
         <e p="Views" t="Include">
           <e p="_ViewImports.cshtml" t="Include" />
           <e p="_ViewStart.cshtml" t="Include" />
+          <e p="Cart" t="Include">
+            <e p="Checkout.cshtml" t="Include" />
+            <e p="Index.cshtml" t="Include" />
+          </e>
+          <e p="Categories" t="Include">
+            <e p="Create.cshtml" t="Include" />
+            <e p="Delete.cshtml" t="Include" />
+            <e p="Details.cshtml" t="Include" />
+            <e p="Edit.cshtml" t="Include" />
+            <e p="Index.cshtml" t="Include" />
+          </e>
           <e p="DataBase" t="Include">
             <e p="AdminPanel.cshtml" t="Include" />
             <e p="Create.cshtml" t="Include" />
@@ -80,16 +94,20 @@
           </e>
           <e p="Home" t="Include">
             <e p="Index.cshtml" t="Include" />
-            <e p="Privacy.cshtml" t="Include" />
           </e>
           <e p="Other" t="Include">
-            <e p="Cart.cshtml" t="Include" />
-            <e p="Checkout.cshtml" t="Include" />
             <e p="Shop.cshtml" t="Include" />
             <e p="SingleProduct.cshtml" t="Include" />
           </e>
           <e p="PartialPages" t="Include">
             <e p="SearchPartial.cshtml" t="Include" />
+          </e>
+          <e p="Products" t="Include">
+            <e p="Create.cshtml" t="Include" />
+            <e p="Delete.cshtml" t="Include" />
+            <e p="Details.cshtml" t="Include" />
+            <e p="Edit.cshtml" t="Include" />
+            <e p="Index.cshtml" t="Include" />
           </e>
           <e p="Shared" t="Include">
             <e p="_Layout.cshtml" t="Include" />
@@ -105,13 +123,14 @@
             <e p="Edit.cshtml" t="Include" />
             <e p="Index.cshtml" t="Include" />
             <e p="Login.cshtml" t="Include" />
+            <e p="MyProfile.cshtml" t="Include" />
           </e>
         </e>
         <e p="wwwroot" t="Include">
           <e p="css" t="Include">
             <e p="bootstrap.min.css" t="Include" />
             <e p="font-awesome.min.css" t="Include" />
-            <e p="Login_Page.css" t="Include" />
+            <e p="lOGIN.css" t="Include" />
             <e p="owl.carousel.css" t="Include" />
             <e p="responsive.css" t="Include" />
           </e>

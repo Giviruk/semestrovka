@@ -63,13 +63,20 @@
                 <div class="user-menu">
                     <ul>
                         <li>
-                            <a href="#"><i class="fa fa-user"></i> My Account</a>
+                            @Html.ActionLink("My Account", "MyProfile", "Users", new
+                            {
+                                @class = "fa fa-user"
+                            })
                         </li>
                         <li>
                             <a href="#"><i class="fa fa-heart"></i> Wishlist</a>
                         </li>
                         <li>
-                            <a class="nav-link text-dark fa fa-user" asp-area="" asp-controller="Cart" asp-action="Cart">Cart</a>
+                            @Html.ActionLink("Cart", "Index", "Cart", "", new
+                            {
+                                @class = "nav-link text-dark fa fa-user"
+                            })
+
                         </li>
                         <li>
                             <a asp-area="" asp-controller="Cart" asp-action="Checkout"><i class="fa fa-user"></i> Checkout</a>
@@ -93,7 +100,7 @@
                 <div class="logo">
                     <h1>
                         <a asp-area="" asp-controller="Home" asp-action="Index">
-                            <img src="~/img/logo.png">
+                            <img src="~/img/logo.png" alt="">
                         </a>
                     </h1>
                 </div>
@@ -101,7 +108,7 @@
 
             <div class="col-sm-6">
                 <div class="shopping-item">
-                    <a asp-area="" asp-controller="Cart" asp-action="Cart">
+                    <a asp-area="" asp-controller="Cart" asp-action="Index">
                         Cart - <span class="cart-amunt">$100</span>
                         <i class="fa fa-shopping-cart"></i>
                         <span class="product-count">5</span>
@@ -127,7 +134,7 @@
                     @foreach (var page in Page.pages)
                     {
                         <li class="@(ViewBag.Title == page.Name ? "active" : null)">
-                            @Html.ActionLink(page.Name == "Index" ? "Home" : page.Name, page.Name.Replace(" ", ""), page.Controller)
+                            @Html.ActionLink(page.Name, page.Name.Replace(" ", ""), page.Controller)
                             @* <a asp-area="" asp-controller=@(page.Controller) asp-action=@(page.Name.Replace(" ", ""))> *@
                             @*         @(page.Name=="Index"?"Home":page.Name) *@
                             @* </a> *@
@@ -302,6 +309,7 @@
 
 <!-- Main Script -->
 <script src="~/js/main.js"></script>
+<script src="~/js/site.js"></script>
 <!-- Slider -->
 <script type="text/javascript" src="js/bxslider.min.js"></script>
 <script type="text/javascript" src="js/script.slider.js"></script>
