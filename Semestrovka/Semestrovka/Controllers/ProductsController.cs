@@ -55,7 +55,7 @@ namespace Semestrovka.Controllers
             cart.Add(product);
             var jsonCart = JsonSerializer.Serialize(cart);
             if (product != null) HttpContext.Response.Cookies.Append("Cart", jsonCart);
-            return Ok();
+            return RedirectToAction("Details");
         }
 
         public IActionResult RemoveFromCart(Product product)
