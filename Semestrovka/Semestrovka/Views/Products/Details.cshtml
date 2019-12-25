@@ -56,7 +56,10 @@
 
             <div class="product-inner-category">
                 <p>
-                    Category: <a href="">Summer</a>. Tags: <a href="">awesome</a>,
+                    Category: @Html.ActionLink("Category" + Model.Category, "Category", "Categories", new
+                              {
+                                  id = Model.Category
+                              }). Tags: <a href="">awesome</a>,
                     <a
                         href="">
                         best
