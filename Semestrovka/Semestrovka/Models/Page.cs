@@ -11,7 +11,7 @@ namespace Semestrovka.Models
             new Page("Single Product"),
             new Page("Cart", "Cart"),
             new Page("Checkout", "Cart"),
-            new Page("Category"),
+            new Page("Category", "Categories"),
             new Page("Others"),
             new Page("Contact")
         };

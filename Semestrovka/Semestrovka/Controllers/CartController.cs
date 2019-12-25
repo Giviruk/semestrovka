@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace Semestrovka.Controllers
         // GET: Cart
         public async Task<IActionResult> Cart()
         { 
-            var id = int.Parse(HttpContext.Request.Cookies["UserId"]);
+            //var id = int.Parse(HttpContext.Request.Cookies["UserId"]);
             var cart = JsonSerializer.Deserialize<List<Product>>(HttpContext.Request.Cookies["Cart"]);
             //var d6H4Jeg5Tcb9d8Context = _context.Orders.Where(o=>o.Owner == id).Include(o => o.DeliveryNavigation)
             //    .Include(o => o.OwnerNavigation).Include(o => o.StatusNavigation);
@@ -142,8 +143,8 @@ namespace Semestrovka.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (orders == null) return NotFound();
-
-            return View(orders);
+            await DeleteConfirmed(Convert.ToInt32(id));
+            return RedirectToAction("Cart");
         }
 
         // POST: Cart/Delete/5
@@ -155,7 +156,7 @@ namespace Semestrovka.Controllers
             var orders = await _context.Orders.FindAsync(id);
             _context.Orders.Remove(orders);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Cart));
+            return RedirectToAction("Cart");
         }
 
         private bool OrdersExists(int id)

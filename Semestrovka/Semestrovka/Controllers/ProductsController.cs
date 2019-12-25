@@ -28,26 +28,23 @@ namespace Semestrovka.Controllers
 
         public async Task<IActionResult> Index(int id)
         {
-            var d6h4jeg5tcb9d8Context = _context.Product.Where(x => x.Category == id).Include(p => p.CategoryNavigation).Include(p => p.MainpictureurlNavigation);
+            var d6h4jeg5tcb9d8Context = _context.Product.Where(x => x.Category == id).Include(p => p.CategoryNavigation)
+                .Include(p => p.MainpictureurlNavigation);
             return View(await d6h4jeg5tcb9d8Context.ToListAsync());
         }
 
         // GET: Products/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var product = await _context.Product
                 .Include(p => p.CategoryNavigation)
                 .Include(p => p.MainpictureurlNavigation)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
+            var b = _context.Productimages.ToList();
+            var a = _context.Images.ToList();
+            if (product == null) return NotFound();
 
             return View(product);
         }
@@ -83,7 +80,9 @@ namespace Semestrovka.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,Category,Producer,Mainpictureurl,Characteristics,ProductRating")] Product product)
+        public async Task<IActionResult> Create(
+            [Bind("Id,Name,Description,Price,Category,Producer,Mainpictureurl,Characteristics,ProductRating")]
+            Product product)
         {
             if (ModelState.IsValid)
             {
@@ -91,6 +90,7 @@ namespace Semestrovka.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["Category"] = new SelectList(_context.Categories, "Id", "Id", product.Category);
             ViewData["Mainpictureurl"] = new SelectList(_context.Images, "Id", "Id", product.Mainpictureurl);
             return View(product);
@@ -99,16 +99,12 @@ namespace Semestrovka.Controllers
         // GET: Products/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var product = await _context.Product.FindAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }
+
+            if (product == null) return NotFound();
+
             ViewData["Category"] = new SelectList(_context.Categories, "Id", "Id", product.Category);
             ViewData["Mainpictureurl"] = new SelectList(_context.Images, "Id", "Id", product.Mainpictureurl);
             return View(product);
@@ -119,12 +115,11 @@ namespace Semestrovka.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,Category,Producer,Mainpictureurl,Characteristics,ProductRating")] Product product)
+        public async Task<IActionResult> Edit(int id,
+            [Bind("Id,Name,Description,Price,Category,Producer,Mainpictureurl,Characteristics,ProductRating")]
+            Product product)
         {
-            if (id != product.Id)
-            {
-                return NotFound();
-            }
+            if (id != product.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
@@ -135,17 +130,13 @@ namespace Semestrovka.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProductExists(product.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    if (!ProductExists(product.Id)) return NotFound();
+                    throw;
                 }
+
                 return RedirectToAction(nameof(Index));
             }
+
             ViewData["Category"] = new SelectList(_context.Categories, "Id", "Id", product.Category);
             ViewData["Mainpictureurl"] = new SelectList(_context.Images, "Id", "Id", product.Mainpictureurl);
             return View(product);
@@ -154,25 +145,21 @@ namespace Semestrovka.Controllers
         // GET: Products/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var product = await _context.Product
                 .Include(p => p.CategoryNavigation)
                 .Include(p => p.MainpictureurlNavigation)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (product == null)
-            {
-                return NotFound();
-            }
+
+            if (product == null) return NotFound();
 
             return View(product);
         }
 
         // POST: Products/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
