@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Semestrovka.Data;
 using Semestrovka.Models;
 using Semestrovka.Models.DBModels;
@@ -26,35 +27,35 @@ namespace Semestrovka.Controllers
                 var cart = new List<Product>();
                 var json = JsonSerializer.Serialize(cart);
                 HttpContext.Response.Cookies.Append("Cart", json);
-                var novelties = _context.Product.ToList().TakeLast(7);
-                ViewBag.Novelties = novelties;
-                var orders = _context.Orders;
+                var novelties = _context.Product.ToList().TakeLast(7).ToList();
+                var orders = _context.Orders.Include(o=>o.Productinorder).ToList();
                 var topSellersDic = new Dictionary<int, int>();
                 foreach (var order in orders)
                 {
                     foreach (var product in order.Productinorder)
                     {
-                        if (!topSellersDic.ContainsKey(product.Id))
+                        if (!topSellersDic.ContainsKey((int)product.Productid))
                         {
-                            topSellersDic.Add(product.Id, 1);
+                            topSellersDic.Add((int)product.Productid, 1);
                         }
                         else
                         {
-                            topSellersDic[product.Id] = +1;
+                            topSellersDic[(int)product.Productid] = +1;
                         }
                     }
                 }
-                var topSellersId = topSellersDic.OrderByDescending(item => item.Value).Select(product => product.Key).Take(5);
+                var topSellersId = topSellersDic.OrderByDescending(item => item.Value).Select(product => product.Key).Take(3);
                 var topSellers = new List<Product>();
                 foreach (var productId in topSellersId)
                 {
                     topSellers.Add(_context.Product.Find(productId));
                 }
+                
                 ViewBag.TopSellers = topSellers;
-                var topNew = _context.Product.ToList().TakeLast(7).OrderByDescending(product => product.ProductRating).ToList();
+                var topNew = _context.Product.ToList().TakeLast(3).OrderByDescending(product => product.ProductRating).ToList();
                 ViewBag.TopNew = topNew;
                 var images = _context.Images.ToList();
-                return View();
+                return View(novelties);
             }
             catch(Exception ex)
             {
