@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Text.Json;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -50,6 +50,24 @@ namespace Semestrovka.Controllers
             }
 
             return View(product);
+        }
+
+        public IActionResult AddToCart(Product product)
+        {
+            var cart = JsonSerializer.Deserialize<List<Product>>(HttpContext.Request.Cookies["Cart"]);
+            cart.Add(product);
+            var jsonCart = JsonSerializer.Serialize(cart);
+            if (product != null) HttpContext.Response.Cookies.Append("Cart", jsonCart);
+            return Ok();
+        }
+
+        public IActionResult RemoveFromCart(Product product)
+        {
+            var cart = JsonSerializer.Deserialize<List<Product>>(HttpContext.Request.Cookies["Cart"]);
+            cart.Remove(product);
+            var jsonCart = JsonSerializer.Serialize(cart);
+            if (product != null) HttpContext.Response.Cookies.Append("Cart", jsonCart);
+            return Ok();
         }
 
         // GET: Products/Create

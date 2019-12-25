@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -21,9 +23,11 @@ namespace Semestrovka.Controllers
         public async Task<IActionResult> Cart()
         { 
             var id = int.Parse(HttpContext.Request.Cookies["UserId"]);
-            var d6H4Jeg5Tcb9d8Context = _context.Orders.Where(o=>o.Owner == id).Include(o => o.DeliveryNavigation)
-                .Include(o => o.OwnerNavigation).Include(o => o.StatusNavigation);
-            return View(await d6H4Jeg5Tcb9d8Context.ToListAsync());
+            var cart = JsonSerializer.Deserialize<List<Product>>(HttpContext.Request.Cookies["Cart"]);
+            //var d6H4Jeg5Tcb9d8Context = _context.Orders.Where(o=>o.Owner == id).Include(o => o.DeliveryNavigation)
+            //    .Include(o => o.OwnerNavigation).Include(o => o.StatusNavigation);
+            //return View(await d6H4Jeg5Tcb9d8Context.ToListAsync());
+            return View(cart);
         }
 
         public IActionResult Checkout()
