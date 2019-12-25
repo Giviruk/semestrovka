@@ -19,8 +19,9 @@ namespace Semestrovka.Controllers
 
         // GET: Cart
         public async Task<IActionResult> Cart()
-        {
-            var d6H4Jeg5Tcb9d8Context = _context.Orders.Include(o => o.DeliveryNavigation)
+        { 
+            var id = int.Parse(HttpContext.Request.Cookies["UserId"]);
+            var d6H4Jeg5Tcb9d8Context = _context.Orders.Where(o=>o.Owner == id).Include(o => o.DeliveryNavigation)
                 .Include(o => o.OwnerNavigation).Include(o => o.StatusNavigation);
             return View(await d6H4Jeg5Tcb9d8Context.ToListAsync());
         }

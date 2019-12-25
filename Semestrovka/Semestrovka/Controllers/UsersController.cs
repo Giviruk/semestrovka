@@ -118,6 +118,7 @@ namespace Semestrovka.Controllers
                 if (user.Pass != pass) return BadRequest("Incorrect pass");
 
                 HttpContext.Response.Cookies.Append("Token", user.Token);
+                HttpContext.Response.Cookies.Append("UserId", user.Id.ToString());
                 ViewBag.Auth = true;
                 return RedirectToAction("MyProfile");
             }
