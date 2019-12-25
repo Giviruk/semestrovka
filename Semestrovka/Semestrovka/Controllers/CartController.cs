@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -137,8 +138,8 @@ namespace Semestrovka.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
 
             if (orders == null) return NotFound();
-
-            return View(orders);
+            await DeleteConfirmed(Convert.ToInt32(id));
+            return RedirectToAction("Cart");
         }
 
         // POST: Cart/Delete/5
@@ -150,7 +151,7 @@ namespace Semestrovka.Controllers
             var orders = await _context.Orders.FindAsync(id);
             _context.Orders.Remove(orders);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Cart));
+            return RedirectToAction("Cart");
         }
 
         private bool OrdersExists(int id)

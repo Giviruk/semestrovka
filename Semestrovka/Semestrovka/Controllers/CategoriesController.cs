@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Semestrovka.Data;
 using Semestrovka.Models.DBModels;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Semestrovka.Controllers
 {
@@ -17,7 +17,7 @@ namespace Semestrovka.Controllers
         }
 
         // GET: Categories
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Category()
         {
             return View(await _context.Categories.ToListAsync());
         }
@@ -25,18 +25,12 @@ namespace Semestrovka.Controllers
         // GET: Categories/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var categories = await _context.Categories
                 .FirstOrDefaultAsync(m => m.Id == id);
-            
-            if (categories == null)
-            {
-                return NotFound();
-            }
+
+            if (categories == null) return NotFound();
 
             return View(categories);
         }
@@ -58,24 +52,19 @@ namespace Semestrovka.Controllers
             {
                 _context.Add(categories);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Category");
             }
+
             return View(categories);
         }
 
         // GET: Categories/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var categories = await _context.Categories.FindAsync(id);
-            if (categories == null)
-            {
-                return NotFound();
-            }
+            if (categories == null) return NotFound();
             return View(categories);
         }
 
@@ -86,10 +75,7 @@ namespace Semestrovka.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Characteristics")] Categories categories)
         {
-            if (id != categories.Id)
-            {
-                return NotFound();
-            }
+            if (id != categories.Id) return NotFound();
 
             if (ModelState.IsValid)
             {
@@ -100,47 +86,38 @@ namespace Semestrovka.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CategoriesExists(categories.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    if (!CategoriesExists(categories.Id)) return NotFound();
+                    throw;
                 }
-                return RedirectToAction(nameof(Index));
+
+                return RedirectToAction("Category");
             }
+
             return View(categories);
         }
 
         // GET: Categories/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            if (id == null) return NotFound();
 
             var categories = await _context.Categories
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (categories == null)
-            {
-                return NotFound();
-            }
+            if (categories == null) return NotFound();
 
             return View(categories);
         }
 
         // POST: Categories/Delete/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var categories = await _context.Categories.FindAsync(id);
             _context.Categories.Remove(categories);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Category");
         }
 
         private bool CategoriesExists(int id)

@@ -74,15 +74,15 @@
           <e p="_ViewImports.cshtml" t="Include" />
           <e p="_ViewStart.cshtml" t="Include" />
           <e p="Cart" t="Include">
+            <e p="Cart.cshtml" t="Include" />
             <e p="Checkout.cshtml" t="Include" />
-            <e p="Index.cshtml" t="Include" />
           </e>
           <e p="Categories" t="Include">
+            <e p="Category.cshtml" t="Include" />
             <e p="Create.cshtml" t="Include" />
             <e p="Delete.cshtml" t="Include" />
             <e p="Details.cshtml" t="Include" />
             <e p="Edit.cshtml" t="Include" />
-            <e p="Index.cshtml" t="Include" />
           </e>
           <e p="DataBase" t="Include">
             <e p="AdminPanel.cshtml" t="Include" />
@@ -108,6 +108,7 @@
             <e p="Details.cshtml" t="Include" />
             <e p="Edit.cshtml" t="Include" />
             <e p="Index.cshtml" t="Include" />
+            <e p="NOTUSED.cshtml" t="Include" />
           </e>
           <e p="Shared" t="Include">
             <e p="_Layout.cshtml" t="Include" />
@@ -116,7 +117,6 @@
             <e p="Error.cshtml" t="Include" />
           </e>
           <e p="Users" t="Include">
-            <e p="Auth.cshtml" t="Include" />
             <e p="Create.cshtml" t="Include" />
             <e p="Delete.cshtml" t="Include" />
             <e p="Details.cshtml" t="Include" />
