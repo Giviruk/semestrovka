@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.Json;
 
 namespace Semestrovka.Controllers
 {
@@ -22,6 +23,9 @@ namespace Semestrovka.Controllers
         {
             try
             {
+                var cart = new List<Product>();
+                var json = JsonSerializer.Serialize(cart);
+                HttpContext.Response.Cookies.Append("Cart", json);
                 var novelties = _context.Product.ToList().TakeLast(7);
                 ViewBag.Novelties = novelties;
                 var orders = _context.Orders;
