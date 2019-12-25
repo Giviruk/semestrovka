@@ -32,9 +32,10 @@
             </div>
 
             <div class="product-gallery">
-                <img src="@Model.Productimages.Skip(1).FirstOrDefault().Image.Imagepath" alt="">
-                <img src="@Model.Productimages.Skip(2).FirstOrDefault().Image.Imagepath" alt="">
-                <img src="@Model.Productimages.Skip(3).FirstOrDefault().Image.Imagepath" alt="">
+                @foreach (var image in Model.Productimages)
+                {
+                    <img src="@image.Image.Imagepath" alt="">
+                }
             </div>
         </div>
     </div>
@@ -46,12 +47,15 @@
                 <ins>@Model.Price</ins>
             </div>
 
-            <form action="" class="cart">
+            <form asp-action="AddToCart" asp-route-product="@Model" class="cart">
+
                 <div class="quantity">
-                    <input type="number" size="4" class="input-text qty text" title="Qty" value="1"
+                    <input type="number" size="4" class="input-text qty text" title="Amount" value="amount"
                            name="quantity" min="1" step="1">
                 </div>
+
                 <button class="add_to_cart_button" type="submit">Add to cart</button>
+
             </form>
 
             <div class="product-inner-category">
@@ -59,11 +63,12 @@
                     Category: @Html.ActionLink("Category" + Model.Category, "Category", "Categories", new
                               {
                                   id = Model.Category
-                              }). Tags: <a href="">awesome</a>,
+                              }). Tags:
+                    @*<a href="">awesome</a>,
                     <a
                         href="">
                         best
-                    </a>, <a href="">sale</a>, <a href="">shoes</a>.
+                    </a>, <a href="">sale</a>, <a href="">shoes</a>.*@
                 </p>
             </div>
 

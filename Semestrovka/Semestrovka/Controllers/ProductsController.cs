@@ -1,6 +1,6 @@
-﻿using System.Text.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -49,7 +49,7 @@ namespace Semestrovka.Controllers
             return View(product);
         }
 
-        public IActionResult AddToCart(Product product)
+        public IActionResult AddToCart(Product product, int amount)
         {
             var cart = JsonSerializer.Deserialize<List<Product>>(HttpContext.Request.Cookies["Cart"]);
             cart.Add(product);
