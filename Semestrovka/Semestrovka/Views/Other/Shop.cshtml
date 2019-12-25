@@ -13,10 +13,12 @@
                 <div class="col-md-3 col-sm-6">
                     <div class="single-shop-product">
                         <div class="product-upper">
-                            <img src="@item.MainpictureurlNavigation.Imagepath" alt="">
+                            <a asp-action="Details" asp-controller="Products" asp-route-id="@item.Id">
+                                <img src="@item.MainpictureurlNavigation.Imagepath" alt="">
+                            </a>
                         </div>
                         <h2>
-                            <a href="">@item.Name</a>
+                            <a asp-action="Details" asp-controller="Products" asp-route-id="@item.Id">@item.Name</a>
                         </h2>
                         <div class="product-carousel-price">
                             <ins>@item.Price</ins>
@@ -25,7 +27,7 @@
 
                         <div class="product-option-shop">
                             <a class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70"
-                               rel="nofollow" href="/canvas/shop/?add-to-cart=70">
+                               rel="nofollow" asp-action="AddToCart" asp-controller="Products" asp-route-product="@item" asp-route-amount="1">
                                 Add to cart
                             </a>
                         </div>

@@ -28,33 +28,33 @@
 
                             <tbody>
 
-                            @foreach (var order in Model)
+                            @foreach (var product in Model)
                             {
                                 <tr class="cart_item">
                                     <td class="product-remove">
                                         @Html.ActionLink("x", "Delete", "Cart", new
                                         {
-                                            id = order.Id
+                                            id = product.Id
                                         }, new
                                         {
                                             @class = "remove"
                                         })
                                     </td>
                                     <td class="product-thumbnail">
-                                        <a asp-area="" asp-controller="Products" asp-action="Details" asp-route-id="@order.Name">
+                                        <a asp-controller="Products" asp-action="Details" asp-route-id="@product.Id">
                                             @*<img width="145" height="145" alt="poster_1_up"
                          class="shop_thumbnail"
                          src=@order.Datecreated>*@
-                                            <a>@order.Producer</a>
+                                            <a>@product.Name</a>
                                         </a>
                                     </td>
 
                                     <td class="product-name">
-                                        <a asp-area="" asp-controller="Products" asp-action="Details" asp-route-id="@order.Id">@order.Id </a>
+                                        <a asp-area="" asp-controller="Products" asp-action="Details" asp-route-id="@product.Id">@product.Id </a>
                                     </td>
 
                                     <td class="product-price">
-                                        <span class="amount">@order.ProductRating</span>
+                                        <span class="amount">@product.ProductRating</span>
                                     </td>
 
                                     <td class="product-quantity">
@@ -63,11 +63,11 @@
                     <input type="number" size="4" class="input-text qty text" title="Qty" value="1" min="0" step="1">
                     <input type="button" class="plus" value="+">
                 </div>*@
-                                        <a >@Model.Count(x => x.Id == order.Id)</a>
+                                        <a @product.Id></a>
                                     </td>
 
                                     <td class="product-subtotal">
-                                        <span class="amount">@order.Price</span>
+                                        <span class="amount">@product.Price</span>
                                     </td>
                                 </tr>
                             }

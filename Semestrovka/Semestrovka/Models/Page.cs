@@ -8,7 +8,6 @@ namespace Semestrovka.Models
         public static List<Page> pages = new List<Page>
         {
             new Page("Shop"),
-            new Page("Single Product"),
             new Page("Cart", "Cart"),
             new Page("Checkout", "Cart"),
             new Page("Category", "Categories"),
