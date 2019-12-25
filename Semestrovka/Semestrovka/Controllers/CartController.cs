@@ -22,12 +22,33 @@ namespace Semestrovka.Controllers
 
         // GET: Cart
         public async Task<IActionResult> Cart()
-        { 
-            //var id = int.Parse(HttpContext.Request.Cookies["UserId"]);
+        {
+
             var cart = JsonSerializer.Deserialize<List<Product>>(HttpContext.Request.Cookies["Cart"]);
-            //var d6H4Jeg5Tcb9d8Context = _context.Orders.Where(o=>o.Owner == id).Include(o => o.DeliveryNavigation)
-            //    .Include(o => o.OwnerNavigation).Include(o => o.StatusNavigation);
-            //return View(await d6H4Jeg5Tcb9d8Context.ToListAsync());
+            var id = 1;
+            if (cart.Count != 0)
+                id = cart.FirstOrDefault().Id;
+            var pr = _context.Product.ToList();
+            var allProductOrders = _context.Productinorder.ToList();
+            var productInOrder = _context.Productinorder.Where(op => op.Productid == id).ToList();
+            var ordersWithRequestedProduct = _context.Orders.Where(order => productInOrder.Select(op => op.Orderid).Contains(order.Id)).ToList();
+            var orderProductsWhichBoughtWithRequest = ordersWithRequestedProduct.Select(x => x.Productinorder).SelectMany(x => x).Where(x => x.Productid != id).ToList();
+            var productIds = orderProductsWhichBoughtWithRequest.Select(op => op.Productid).ToList();
+            var dict = new Dictionary<int, int>();
+            foreach (int productId in productIds)
+            {
+                if (!dict.ContainsKey((int)productId))
+                    dict.Add(productId, 1);
+                else
+                    dict[productId]++;
+            }
+            var requestedIds = dict.OrderByDescending(pair => pair.Value).Select(pair => pair.Key).Take(3).ToList();
+            var relatedProducts = new List<Product>();
+            foreach (var reqId in requestedIds)
+                relatedProducts.Add(_context.Product.Find(reqId));
+            var images = _context.Images.ToList();
+            var images2 = _context.Productimages.ToList();
+            ViewBag.RelatedProducts = relatedProducts;
             return View(cart);
         }
 
