@@ -14,7 +14,7 @@
 <div class="product-content-right">
 <div class="product-breadcroumb">
     @Html.ActionLink("Home", "Index", "Home")
-    @Html.ActionLink("Category" + Model.Category, "Category", "Categories", new
+    @Html.ActionLink(Model.CategoryNavigation.Name, "Category", "Categories", new
     {
         id = Model.Category
     })
@@ -28,7 +28,7 @@
     <div class="col-sm-6">
         <div class="product-images">
             <div class="product-main-img">
-                <img src="@Model.Productimages.FirstOrDefault()" alt="">
+                <img src="@Model.MainpictureurlNavigation.Imagepath" alt="">
             </div>
 
             <div class="product-gallery">
@@ -47,7 +47,7 @@
                 <ins>@Model.Price</ins>
             </div>
 
-            <form asp-action="AddToCart" asp-route-product="@Model" class="cart">
+            <form asp-action="AddToCart" asp-route-productId="@Model.Id" class="cart">
 
                 <div class="quantity">
                     <input type="number" size="4" class="input-text qty text" title="Amount" value="1"
@@ -60,7 +60,7 @@
 
             <div class="product-inner-category">
                 <p>
-                    Category: @Html.ActionLink("Category" + Model.Category, "Category", "Categories", new
+                    Category: @Html.ActionLink(Model.CategoryNavigation.Name, "Category", "Categories", new
                               {
                                   id = Model.Category
                               }). Tags:

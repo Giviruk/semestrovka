@@ -49,15 +49,15 @@ namespace Semestrovka.Controllers
             return View(product);
         }
 
-        public void AddToCart(Product product, int amount)
+        public void AddToCart(int productId, int amount)
         {
             if (amount <= 0) return;
 
-            var cart = JsonSerializer.Deserialize<List<Product>>(HttpContext.Request.Cookies["Cart"]);
+            var cart = JsonSerializer.Deserialize<List<int>>(HttpContext.Request.Cookies["Cart"]);
             for(int i = 0; i < amount; i++)
-                cart.Add(product);
+                cart.Add(productId);
             var jsonCart = JsonSerializer.Serialize(cart);
-            if (product != null) HttpContext.Response.Cookies.Append("Cart", jsonCart);
+            HttpContext.Response.Cookies.Append("Cart", jsonCart);
         }
 
         public IActionResult RemoveFromCart(Product product)

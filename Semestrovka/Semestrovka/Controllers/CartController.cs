@@ -24,7 +24,18 @@ namespace Semestrovka.Controllers
         public async Task<IActionResult> Cart()
         {
 
-            var cart = JsonSerializer.Deserialize<List<Product>>(HttpContext.Request.Cookies["Cart"]);
+            var cartId = JsonSerializer.Deserialize<List<int>>(HttpContext.Request.Cookies["Cart"]);
+            var cart = new List<Product>();
+            foreach(var productId in cartId)
+            {
+                var product = _context.Product
+                    .Include(o => o.CategoryNavigation)
+                    .Include(o => o.MainpictureurlNavigation)
+                    .Include(o => o.Productimages)
+                    .Include(o => o.Productinorder)
+                    .FirstOrDefault(product => product.Id == productId);
+                cart.Add(product);
+            }
             var id = 1;
             if (cart.Count != 0)
                 id = cart.FirstOrDefault().Id;
@@ -42,7 +53,7 @@ namespace Semestrovka.Controllers
                 else
                     dict[productId]++;
             }
-            var requestedIds = dict.OrderByDescending(pair => pair.Value).Select(pair => pair.Key).Take(3).ToList();
+            var requestedIds = dict.OrderByDescending(pair => pair.Value).Select(pair => pair.Key).Take(2).ToList();
             var relatedProducts = new List<Product>();
             foreach (var reqId in requestedIds)
                 relatedProducts.Add(_context.Product.Find(reqId));
