@@ -24,7 +24,7 @@ namespace Semestrovka.Controllers
         {
             try
             {
-                var cart = new List<Product>();
+                var cart = new List<int>();
                 var json = JsonSerializer.Serialize(cart);
                 HttpContext.Response.Cookies.Append("Cart", json);
                 var novelties = _context.Product.ToList().TakeLast(7).ToList();
