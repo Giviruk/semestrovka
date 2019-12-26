@@ -45,7 +45,7 @@
     {
         <tr>
             <td>
-                <img src="@item.Productimages.FirstOrDefault()">
+                <img src="@item.Productimages.FirstOrDefault().Image.Imagepath">
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
