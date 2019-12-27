@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using System.Net.Http
+@using Microsoft.AspNetCore.Http
+@using Semestrovka.Models.DBModels
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -72,22 +75,14 @@
                         <li>
                             <a asp-area="" asp-controller="Cart" asp-action="Checkout"><i class="fa fa-user"></i> Checkout</a>
                         </li>
+
                         <li>
-                            @if (ViewBag.Auth as bool? != true)
+                            @Html.ActionLink("My Account", "MyProfile", "Users", new
                             {
-                                @Html.ActionLink("Login", "Login", "Users", "", new
-                                {
-                                    @class = "fa fa-user"
-                                })
-                            }
-                            else
-                            {
-                                @Html.ActionLink("My Account", "MyProfile", "Users", new
-                                {
-                                    @class = "fa fa-user"
-                                })
-                            }
+                                @class = "fa fa-user"
+                            })
                         </li>
+
                     </ul>
                 </div>
             </div>
@@ -122,7 +117,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @foreach (var page in Page.pages)
+                    @foreach (var page in Page.Pages)
                     {
                         <li class="@(ViewBag.Title == page.Name ? "active" : null)">
                             @Html.ActionLink(page.Name, page.Name.Replace(" ", ""), page.Controller)

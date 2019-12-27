@@ -23,10 +23,10 @@ namespace Semestrovka.Controllers
         // GET: Cart
         public async Task<IActionResult> Cart()
         {
-
             var cartId = JsonSerializer.Deserialize<List<int>>(HttpContext.Request.Cookies["Cart"]);
             var cart = new List<Product>();
-            foreach(var productId in cartId)
+
+            foreach (var productId in cartId)
             {
                 var product = _context.Product
                     .Include(o => o.CategoryNavigation)
@@ -36,23 +36,28 @@ namespace Semestrovka.Controllers
                     .FirstOrDefault(product => product.Id == productId);
                 cart.Add(product);
             }
+
             var id = 1;
             if (cart.Count != 0)
                 id = cart.FirstOrDefault().Id;
             var pr = _context.Product.ToList();
             var allProductOrders = _context.Productinorder.ToList();
             var productInOrder = _context.Productinorder.Where(op => op.Productid == id).ToList();
-            var ordersWithRequestedProduct = _context.Orders.Where(order => productInOrder.Select(op => op.Orderid).Contains(order.Id)).ToList();
-            var orderProductsWhichBoughtWithRequest = ordersWithRequestedProduct.Select(x => x.Productinorder).SelectMany(x => x).Where(x => x.Productid != id).ToList();
+            var ordersWithRequestedProduct = _context.Orders
+                .Where(order => productInOrder.Select(op => op.Orderid).Contains(order.Id)).ToList();
+            var orderProductsWhichBoughtWithRequest = ordersWithRequestedProduct.Select(x => x.Productinorder)
+                .SelectMany(x => x).Where(x => x.Productid != id).ToList();
             var productIds = orderProductsWhichBoughtWithRequest.Select(op => op.Productid).ToList();
             var dict = new Dictionary<int, int>();
+
             foreach (int productId in productIds)
             {
-                if (!dict.ContainsKey((int)productId))
+                if (!dict.ContainsKey((int) productId))
                     dict.Add(productId, 1);
                 else
                     dict[productId]++;
             }
+
             var requestedIds = dict.OrderByDescending(pair => pair.Value).Select(pair => pair.Key).Take(2).ToList();
             var relatedProducts = new List<Product>();
             foreach (var reqId in requestedIds)

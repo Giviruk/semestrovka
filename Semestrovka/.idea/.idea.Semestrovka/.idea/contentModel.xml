@@ -97,7 +97,6 @@
           </e>
           <e p="Other" t="Include">
             <e p="Shop.cshtml" t="Include" />
-            <e p="SingleProduct.cshtml" t="Include" />
           </e>
           <e p="PartialPages" t="Include">
             <e p="SearchPartial.cshtml" t="Include" />

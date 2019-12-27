@@ -5,14 +5,12 @@ namespace Semestrovka.Models
 {
     public class Page
     {
-        public static List<Page> pages = new List<Page>
+        public static List<Page> Pages = new List<Page>
         {
             new Page("Shop"),
             new Page("Cart", "Cart"),
             new Page("Checkout", "Cart"),
             new Page("Category", "Categories"),
-            new Page("Others"),
-            new Page("Contact")
         };
 
         public string Controller;

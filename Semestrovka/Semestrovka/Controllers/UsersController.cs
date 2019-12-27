@@ -50,7 +50,10 @@ namespace Semestrovka.Controllers
 
         public IActionResult MyProfile()
         {
-            var user = _context.Users.FirstOrDefault(x => x.Token == HttpContext.Request.Cookies["Token"]);
+            var token = HttpContext.Request.Cookies["Token"];
+            if (token == null) return RedirectToAction("Login");
+            var user = _context.Users.Where(x=>x.Id != 41).FirstOrDefault(x => x.Token == token);
+            if (user == null) return RedirectToAction("Login");;
             return View(user);
         }
 
@@ -88,7 +91,7 @@ namespace Semestrovka.Controllers
             try
             {
                 if (user == null) return NotFound();
-                if (user.City == null) return BadRequest("City was null");
+                user.City = 35;
                 _context.Users.Update(user);
                 _context.SaveChanges();
                 var a = HttpContext.Request.Cookies["Token"];
@@ -103,6 +106,7 @@ namespace Semestrovka.Controllers
         public IActionResult LogOut()
         {
             ViewBag.Auth = false;
+            HttpContext.Response.Cookies.Delete("Token");
             return RedirectToAction("Login");
         }
 
